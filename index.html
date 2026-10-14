@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Portfolio de Bruno Pacienzia, estudiante de Ingeniería en Sistemas de Información (UTN Rosario).">
+<title>Bruno Pacienzia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: hero en dos columnas (presentación + bitácora de trayectoria), proyectos como fichas con vista esquemática arriba, alternando ancho completo y pares */
+:root{
+  --bg:#F1EFEA;
+  --surface:#FBFAF7;
+  --ink:#161A1F;
+  --muted:#5C6168;
+  --line:#D8D4CB;
+  --accent:#1F4FD8;
+  --accent-soft:#DCE4FB;
+  --warm:#D2541E;
+  --warm-soft:#F8E0D3;
+  --plot:#8A8F96;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "Cascadia Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121417; --surface:#1A1D22; --ink:#ECEAE5; --muted:#A2A6AC; --line:#2E3239;
+    --accent:#8AA8FF; --accent-soft:#1F2A4A; --warm:#FF8A55; --warm-soft:#3A2418; --plot:#7A8089; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121417; --surface:#1A1D22; --ink:#ECEAE5; --muted:#A2A6AC; --line:#2E3239;
+  --accent:#8AA8FF; --accent-soft:#1F2A4A; --warm:#FF8A55; --warm-soft:#3A2418; --plot:#7A8089; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.wrap{max-width:1080px;margin:0 auto;padding-block:48px 72px;display:flex;flex-direction:column;gap:88px}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+h1,h2,h3{font-family:var(--display);line-height:1.05;text-wrap:balance;margin:0}
+p{margin:0}
+.label{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:48px;align-items:start}
+.intro{display:flex;flex-direction:column;gap:22px}
+h1{font-size:clamp(52px,9vw,112px);font-weight:800;letter-spacing:-.035em}
+h1 .last{display:block;color:var(--accent)}
+.hello{font-size:clamp(20px,2.4vw,24px);max-width:30ch;font-family:var(--display);font-weight:400;line-height:1.3}
+.hello em{font-style:normal;background:var(--warm-soft);color:var(--warm);padding:0 6px;border-radius:4px}
+.about{max-width:56ch;color:var(--muted)}
+.contact{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;font-family:var(--mono);font-size:14px}
+.contact .mail{user-select:all;color:var(--ink)}
+button.copy{font:inherit;font-size:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:4px 12px;cursor:pointer}
+button.copy:hover{border-color:var(--accent)}
+
+.log{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:16px;font-family:var(--mono);font-size:13.5px}
+.log ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.log li{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:baseline}
+.log time{color:var(--muted);font-variant-numeric:tabular-nums}
+.log li.now span{color:var(--warm)}
+.log li.now span::after{content:" ●";font-size:9px;vertical-align:2px}
+.meter{display:flex;flex-direction:column;gap:8px;border-top:1px dashed var(--line);padding-top:14px}
+.meter .row{display:flex;justify-content:space-between;gap:10px}
+.meter strong{font-family:var(--display);font-size:22px;font-weight:800;color:var(--ink)}
+.bar{display:grid;grid-template-columns:repeat(36,1fr);gap:2px}
+.bar i{height:10px;border-radius:2px;background:var(--accent)}
+.bar i.todo{background:var(--line)}
+
+/* SECCIONES */
+section{display:flex;flex-direction:column;gap:28px}
+.sechead{display:flex;flex-direction:column;gap:6px}
+h2{font-size:clamp(32px,5vw,52px);font-weight:800;letter-spacing:-.02em}
+
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.proj{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.proj.wide{grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
+.viz{background:var(--bg);border-bottom:1px solid var(--line);aspect-ratio:16/9;max-width:100%;position:relative;display:flex;align-items:center;justify-content:center}
+.proj.wide .viz{border-bottom:0;border-right:1px solid var(--line);aspect-ratio:auto;min-height:280px}
+.proj.wide .viz.shot img{object-fit:contain;object-position:center;padding:12px}
+.viz svg,.viz canvas{width:100%;height:100%;display:block}
+.viz .cap{position:absolute;left:12px;bottom:10px;font-family:var(--mono);font-size:11px;color:var(--muted);background:var(--bg);padding:2px 6px;border-radius:4px}
+.body{padding:24px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:var(--mono);font-size:12px;padding:3px 9px;border-radius:999px;background:var(--warm-soft);color:var(--warm)}
+.proj h3{font-size:clamp(22px,2.6vw,28px);font-weight:600;letter-spacing:-.01em}
+.proj ul{margin:0;padding-left:20px}
+.proj li+li{margin-top:4px}
+.stack{display:flex;flex-wrap:wrap;gap:6px}
+.stack span{font-family:var(--mono);font-size:12.5px;background:var(--accent-soft);color:var(--ink);border-radius:6px;padding:3px 8px}
+.proj .link{font-family:var(--mono);font-size:13.5px;word-break:break-all;margin-top:auto}
+.links{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:auto}
+.viz.shot{background:#fff;overflow:hidden}
+.viz.shot img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
+.viz.metrics{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;gap:0}
+.mcol{display:flex;flex-direction:column;gap:10px;padding:20px;justify-content:center;min-width:0}
+.mcol + .mcol{border-left:1px solid var(--line)}
+.m{display:flex;flex-direction:column;line-height:1.1}
+.m strong{font-family:var(--display);font-size:clamp(26px,3.4vw,36px);font-weight:800;font-variant-numeric:tabular-nums}
+.m span{font-size:13px;color:var(--muted)}
+.mcol:first-child .m strong{color:var(--accent)}
+.mcol:last-child .m strong{color:var(--warm)}
+.note{font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+.minor{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.minor div{border-top:2px solid var(--ink);padding-top:12px;min-width:0}
+.minor h3{font-size:19px;font-weight:600;margin-bottom:4px}
+.minor p{color:var(--muted);font-size:15.5px}
+
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.cols > div{display:flex;flex-direction:column;gap:10px;min-width:0}
+dl{margin:0;display:flex;flex-direction:column;gap:14px}
+dt{font-weight:700}
+dd{margin:0;color:var(--muted);font-size:15.5px}
+dd .tag{margin-left:4px}
+
+footer{border-top:1px solid var(--line);padding-top:20px;color:var(--muted);font-size:14px;display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between}
+
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr;gap:32px}
+  .grid,.minor,.cols{grid-template-columns:1fr}
+  .proj.wide{display:flex}
+  .proj.wide .viz{border-right:0;border-bottom:1px solid var(--line);aspect-ratio:16/9;min-height:0}
+  .wrap{gap:64px}
+}
+@media (max-width:480px){ body{font-size:16px} .body{padding:18px} }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="intro">
+      <span class="label">Rosario · Santa Fe · Argentina</span>
+      <h1>Bruno<span class="last">Pacienzia</span></h1>
+      <p class="hello">Estudio Ingeniería en Sistemas en la UTN y me gusta <em>entender cómo funciona algo</em> antes de ponerme a programarlo.</p>
+      <p class="about">Antes de entrar a la facultad me recibí de Técnico Químico en el Instituto Politécnico. Hoy estoy en el último tramo de Ingeniería en Sistemas, y lo que más disfruto es desarrollar aplicaciones web y trabajar con datos. En cada proyecto trato de entender bien el problema antes de empezar a programar.</p>
+      <div class="contact">
+        <span class="mail" id="mail">pacienziabruno@gmail.com</span>
+        <button class="copy" id="copy" type="button">Copiar mail</button>
+        <a href="https://github.com/BrunoPacienzia" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+
+    <aside class="log" aria-label="Trayectoria">
+      <span class="label">Bitácora</span>
+      <ol>
+        <li><time>2020</time><span>Técnico Químico, Instituto Politécnico</span></li>
+        <li><time>2022</time><span>Ingreso a Ingeniería en Sistemas, UTN FRR</span></li>
+        <li><time>2024</time><span>Bootcamp de Python (100 Days of Code)</span></li>
+        <li><time>2025</time><span>Full Stack JavaScript Developer, IBM</span></li>
+        <li><time>2026</time><span>Trabajo de investigación enviado a CONAISI</span></li>
+        <li class="now"><time>hoy</time><span>Proyecto final y curso de datos en Google Cloud</span></li>
+      </ol>
+      <div class="meter" aria-label="32 de 36 materias obligatorias aprobadas">
+        <div class="row"><span class="label">Carrera al día</span><span><strong>32</strong> <span class="label">/ 36 materias</span></span></div>
+        <div class="bar" id="bar" aria-hidden="true"></div>
+      </div>
+    </aside>
+  </div>
+
+  <section id="proyectos">
+    <div class="sechead">
+      <span class="label">Lo que vengo haciendo</span>
+      <h2>Proyectos</h2>
+    </div>
+
+    <div class="grid">
+
+      <article class="proj wide">
+        <div class="viz">
+          <svg viewBox="0 0 520 300" role="img" aria-label="Esquema de cinco locales con flechas de redistribución de stock">
+            <g font-family="JetBrains Mono, monospace" font-size="11">
+              <g id="stores"></g>
+            </g>
+          </svg>
+          <span class="cap">esquema · redistribución entre los 5 locales</span>
+        </div>
+        <div class="body">
+          <div class="tags"><span class="tag">Proyecto final · en curso</span></div>
+          <h3>Gestión de stock inteligente</h3>
+          <p>Proyecto final en dupla para una PyME de indumentaria con cinco locales en Rosario y Santa Fe. Hablamos con las empleadas, dibujamos los procesos y encontramos el problema de fondo: compras de temporada que no se pueden devolver y mercadería que sobra en un local y falta en otro.</p>
+          <ul>
+            <li>Predicción de demanda por sucursal con series temporales.</li>
+            <li>Sugerencias para mover mercadería entre locales antes de comprar más.</li>
+            <li>Punto de pedido según tiempos de entrega y stock de seguridad.</li>
+          </ul>
+          <div class="stack"><span>Relevamiento</span><span>Procesos</span><span>Machine Learning</span><span>Cloud</span></div>
+        </div>
+      </article>
+
+      <article class="proj wide">
+        <div class="viz shot"><img src="conaisi.png" alt="Gráfico del paper: población de la plaga sin control frente a control optimizado con algoritmo genético, de septiembre a mayo, con el umbral de daño de 500"><span class="cap">figura del paper · sin control vs. control optimizado</span></div>
+        <div class="body">
+          <div class="tags"><span class="tag">Enviado a CONAISI 2026</span><span class="tag">Equipo de 4</span></div>
+          <h3>Algoritmos genéticos y teoría del caos</h3>
+          <p>La oruga cogollera es una de las plagas que más afecta al maíz en el sur de Santa Fe, y su población cambia mucho con la temperatura y la humedad. Simulamos su evolución de septiembre a mayo y usamos un algoritmo genético para elegir cuándo, cuánto y qué insecticida aplicar (Spinetoram o Spinosad), buscando el menor gasto sin que la plaga supere el umbral de daño.</p>
+          <div class="stack"><span>Python</span><span>Algoritmos genéticos</span><span>Sistemas dinámicos</span></div>
+          <a class="link" href="paper-conaisi.pdf" target="_blank" rel="noopener">Leer el paper (PDF)</a>
+        </div>
+      </article>
+
+      <article class="proj">
+        <div class="viz shot"><img src="expense.jpg" alt="Panel del Expense Tracker con el resumen de gastos, el formulario para agregar un gasto y el historial"><span class="cap">captura · app publicada</span></div>
+        <div class="body">
+          <h3>Expense Tracker</h3>
+          <p>Aplicación full stack para registrar, editar y eliminar gastos, publicada y con el código abierto. API con autenticación JWT y contraseñas con bcrypt, sobre PostgreSQL en Neon. Frontend en React con Tailwind y shadcn/ui.</p>
+          <div class="stack"><span>Node.js</span><span>TypeScript</span><span>React</span><span>PostgreSQL</span><span>Tailwind</span></div>
+          <div class="links"><a class="link" href="https://expense-tracker-frontend-two-coral.vercel.app/" target="_blank" rel="noopener">Ver la app</a><a class="link" href="https://github.com/BrunoPacienzia/expense-tracker" target="_blank" rel="noopener">Código en GitHub</a></div>
+        </div>
+      </article>
+
+      <article class="proj">
+        <div class="viz metrics" aria-label="Resultados del proyecto">
+          <div class="mcol">
+            <span class="label">Predicción de demoras</span>
+            <div class="m"><strong>69,8%</strong><span>accuracy</span></div>
+            <div class="m"><strong>73,8%</strong><span>precisión</span></div>
+            <span class="note">regresión logística, elegida entre 4 modelos</span>
+          </div>
+          <div class="mcol">
+            <span class="label">Segmentación</span>
+            <div class="m"><strong>0,60</strong><span>silueta</span></div>
+            <div class="m"><strong>2</strong><span>grupos: VIP y estándar</span></div>
+            <span class="note">K-Means, con PCA que explica el 64,5%</span>
+          </div>
+        </div>
+        <div class="body">
+          <h3>Demoras y segmentación en una aerolínea</h3>
+          <p>Dos problemas para una aerolínea. Primero, predecir qué vuelos se van a demorar para bajar el costo operativo: comparamos regresión logística, árbol de decisión, KNN y análisis discriminante. Después, agrupar a los pasajeros afectados según su perfil para decidir qué beneficio darle a cada grupo: sala VIP o voucher de comida.</p>
+          <div class="stack"><span>Python</span><span>scikit-learn</span><span>SPSS</span><span>LaTeX</span></div>
+          <a class="link" href="https://github.com/BrunoPacienzia/airline-passenger-segmentation" target="_blank" rel="noopener">github.com/BrunoPacienzia/airline-passenger-segmentation</a>
+        </div>
+      </article>
+
+      <article class="proj">
+        <div class="viz shot"><img src="datamart.jpg" alt="Dashboard de Tableau con análisis de productos: ventas de energy drinks, consumo de bebidas en lata y popularidad de productos diet"><span class="cap">captura · dashboard en Tableau Public</span></div>
+        <div class="body">
+          <h3>Data mart de bebidas</h3>
+          <p>ETL en KNIME para armar un data mart de ventas con modelo estrella, y un dashboard en Tableau que responde los 12 requerimientos de análisis del caso: ventas por producto, consumo por tipo de envase, popularidad de productos diet y compras según edad del cliente.</p>
+          <div class="stack"><span>KNIME</span><span>ETL</span><span>Modelo estrella</span><span>Tableau</span></div>
+          <a class="link" href="https://public.tableau.com/app/profile/bruno.pacienzia/viz/TP3_SDG/AnlisisdeProductos" target="_blank" rel="noopener">Ver el dashboard en Tableau Public</a>
+        </div>
+      </article>
+
+      <article class="proj">
+        <div class="viz shot"><img src="reviews.jpg" alt="Pantalla de inicio del sistema de reviews con accesos a crear review y ver reviews por materias o profesores"><span class="cap">captura · app publicada</span></div>
+        <div class="body">
+          <div class="tags"><span class="tag">Equipo de 3</span></div>
+          <h3>Reviews de profesores</h3>
+          <p>Plataforma web para calificar materias y docentes. APIs REST, autenticación y roles, todo trabajado en equipo con Git Flow.</p>
+          <div class="stack"><span>Express</span><span>TypeScript</span><span>React</span><span>Next.js</span></div>
+          <div class="links"><a class="link" href="https://tp-dsw-front-next.vercel.app/" target="_blank" rel="noopener">Ver la app</a><a class="link" href="https://github.com/BrunoPacienzia/tp_dsw_front_next" target="_blank" rel="noopener">Código en GitHub</a></div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="minor">
+      <div><h3>Clasificador de frutas y verduras</h3><p>Competencia de Kaggle de la cátedra de IA: clasificación de imágenes con PyTorch y transfer learning.</p></div>
+      <div><h3>Agente recomendador de juegos</h3><p>Un agente con LangChain que recomienda juegos de PC según lo que le pedís.</p></div>
+    </div>
+  </section>
+
+  <section id="perfil">
+    <div class="sechead">
+      <span class="label">Herramientas y formación</span>
+      <h2>Con qué trabajo</h2>
+    </div>
+    <div class="cols">
+      <div>
+        <span class="label">Desarrollo</span>
+        <div class="stack"><span>JavaScript</span><span>TypeScript</span><span>Node.js</span><span>Express</span><span>React</span><span>Next.js</span><span>REST · JWT</span><span>Git</span><span>Postman</span></div>
+        <span class="label" style="margin-top:12px">Datos</span>
+        <div class="stack"><span>SQL</span><span>PostgreSQL</span><span>MySQL</span><span>Python</span><span>pandas</span><span>scikit-learn</span><span>PyTorch</span><span>Power BI</span><span>Tableau</span><span>KNIME</span></div>
+      </div>
+      <div>
+        <span class="label">Formación</span>
+        <dl>
+          <div><dt>Ingeniería en Sistemas de Información</dt><dd>UTN Facultad Regional Rosario · 2022 – hoy</dd></div>
+          <div><dt>Técnico Químico</dt><dd>Instituto Politécnico Superior, Rosario · 2020</dd></div>
+        </dl>
+      </div>
+      <div>
+        <span class="label">Cursos</span>
+        <dl>
+          <div><dt>Ingeniería y Análisis de Datos en Google Cloud</dt><dd>2026 <span class="tag">en curso</span></dd></div>
+          <div><dt>Gestión de Proyectos y Agile</dt><dd>Santander Open Academy · 2026</dd></div>
+          <div><dt>Full Stack JavaScript Developer</dt><dd>IBM · Coursera · 2025</dd></div>
+          <div><dt>100 Days of Code: Python</dt><dd>Udemy · 2024</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Español nativo · Inglés B2 · Disponible full-time o part-time, en Rosario o remoto</span>
+    <a href="https://github.com/BrunoPacienzia" target="_blank" rel="noopener">github.com/BrunoPacienzia</a>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var NS='http://www.w3.org/2000/svg';
+  function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;}
+
+  // barra de carrera
+  var bar=document.getElementById('bar');
+  for(var i=0;i<36;i++){var s=document.createElement('i');if(i>=32)s.className='todo';bar.appendChild(s);}
+
+  // copiar mail
+  var btn=document.getElementById('copy'),mail=document.getElementById('mail');
+  btn.addEventListener('click',function(){
+    function sel(){var r=document.createRange();r.selectNodeContents(mail);var s=window.getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Seleccionado';}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(mail.textContent).then(function(){btn.textContent='Copiado';},sel);}else sel();
+    setTimeout(function(){btn.textContent='Copiar mail';},2000);
+  });
+
+  // esquema de locales
+  var g=document.getElementById('stores');
+  var st=[{n:'Alto Rosario',x:110,y:70,s:.45},{n:'Del Siglo',x:270,y:55,s:.9},{n:'Outlet',x:420,y:95,s:.95},{n:'Portal',x:150,y:210,s:.3},{n:'Santa Fe',x:390,y:220,s:.55}];
+  [[2,3],[1,0]].forEach(function(p){var a=st[p[0]],b=st[p[1]];
+    el('path',{d:'M'+a.x+' '+a.y+' Q '+((a.x+b.x)/2)+' '+((a.y+b.y)/2-40)+' '+b.x+' '+(b.y),fill:'none',stroke:'var(--warm)','stroke-width':2,'stroke-dasharray':'5 5'},g);});
+  st.forEach(function(s){
+    el('circle',{cx:s.x,cy:s.y,r:7,fill:'var(--ink)'},g);
+    el('rect',{x:s.x+14,y:s.y-22,width:12,height:40,rx:2,fill:'var(--line)'},g);
+    el('rect',{x:s.x+14,y:s.y+18-40*s.s,width:12,height:40*s.s,rx:2,fill:s.s>.8?'var(--warm)':s.s<.4?'var(--plot)':'var(--accent)'},g);
+    var t=el('text',{x:s.x,y:s.y+30,fill:'var(--muted)','text-anchor':'middle'},g);t.textContent=s.n;
+  });
+
+})();
+</script>
+
+</body>
+</html>
